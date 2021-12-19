@@ -1,8 +1,11 @@
 <script>
-	//
+	import NavBar from '../components/NavBar.svelte';
 </script>
 
-<slot />
+<div>
+	<NavBar />
+	<slot />
+</div>
 
 <style>
 	@tailwind base;
