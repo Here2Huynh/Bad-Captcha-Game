@@ -16,7 +16,7 @@
 
 <div>
 	{#if idx == 1}
-		<Level1 />
+		<Level1 {idx} />
 	{:else if idx == 2}
 		<div>level 2</div>
 	{:else}

@@ -7,7 +7,7 @@ export const levels = writable([
 	},
 	{
 		idx: 2,
-		name: 'growing bars'
+		name: 'dragging time match'
 	},
 	{
 		idx: 3,
