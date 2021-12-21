@@ -1,50 +1,93 @@
 <script>
-	export let promptCodeLength;
+	import InputStore from '../stores/inputStore';
 
-	const promptCodeObjArr = Array(promptCodeLength).fill({ value: '', selected: false });
+	const boxClass = 'box-content border-4 rounded-lg m-1 w-16 h-20';
+	const inputClass = 'w-full h-full text-center text-5xl outline-slate-400 caret-transparent';
 
-	let input_one = false;
-	let input_two = false;
-	let input_three = false;
-	let input_four = false;
-	let input_five = false;
+	const handleInput = (idx) => {
+		InputStore.update((currentInputs) => {
+			const copiedInputs = [...currentInputs];
+			// copiedInputs[idx].value = 'T';
+			// TODO: input updates occurs here
+
+			return copiedInputs;
+		});
+	};
+
+	const handleClick = (idx) => {
+		InputStore.update((currentInputs) => {
+			const copiedInputs = [...currentInputs];
+			copiedInputs[idx].selected = !copiedInputs[idx].selected;
+			return copiedInputs;
+		});
+	};
 </script>
 
-<div class="m-5 mt-2 flex justify-center">
+<div class="m-5 mt-2 p-4 flex justify-center">
 	<div
-		class="box-content p-4 border-4 rounded-lg m-1 "
-		class:border-cyan-400={input_one}
-		on:click={() => (input_one = !input_one)}
+		class={boxClass}
+		class:border-cyan-400={$InputStore[0].selected}
+		on:click={() => handleClick(0)}
 	>
-		<input class="w-5 h-10 text-5xl m-1 outline-slate-400" maxlength="0" type="text" on:click />
+		<input
+			class={inputClass}
+			maxlength="1"
+			type="text"
+			on:click={() => handleInput(0)}
+			bind:value={$InputStore[0].value}
+		/>
 	</div>
 	<div
-		class="box-content p-4 border-4 rounded-lg m-1 "
-		class:border-cyan-400={input_two}
-		on:click={() => (input_two = !input_two)}
+		class={boxClass}
+		class:border-cyan-400={$InputStore[1].selected}
+		on:click={() => handleClick(1)}
 	>
-		<input class="w-5 h-10 text-5xl m-1 outline-slate-400" maxlength="0" type="text" on:click />
+		<input
+			class={inputClass}
+			maxlength="1"
+			type="text"
+			on:click
+			bind:value={$InputStore[1].value}
+		/>
 	</div>
 	<div
-		class="box-content p-4 border-4 rounded-lg m-1 "
-		class:border-cyan-400={input_three}
-		on:click={() => (input_three = !input_three)}
+		class={boxClass}
+		class:border-cyan-400={$InputStore[2].selected}
+		on:click={() => handleClick(2)}
 	>
-		<input class="w-5 h-10 text-5xl m-1 outline-slate-400" maxlength="0" type="text" on:click />
+		<input
+			class={inputClass}
+			maxlength="1"
+			type="text"
+			on:click
+			bind:value={$InputStore[2].value}
+		/>
 	</div>
 	<div
-		class="box-content p-4 border-4 rounded-lg m-1 "
-		class:border-cyan-400={input_four}
-		on:click={() => (input_four = !input_four)}
+		class={boxClass}
+		class:border-cyan-400={$InputStore[3].selected}
+		on:click={() => handleClick(3)}
 	>
-		<input class="w-5 h-10 text-5xl m-1 outline-slate-400" maxlength="0" type="text" on:click />
+		<input
+			class={inputClass}
+			maxlength="1"
+			type="text"
+			on:click
+			bind:value={$InputStore[3].value}
+		/>
 	</div>
 	<div
-		class="box-content p-4 border-4 rounded-lg m-1 "
-		class:border-cyan-400={input_five}
-		on:click={() => (input_five = !input_five)}
+		class={boxClass}
+		class:border-cyan-400={$InputStore[4].selected}
+		on:click={() => handleClick(4)}
 	>
-		<input class="w-5 h-10 text-5xl m-1 outline-slate-400" maxlength="0" type="text" on:click />
+		<input
+			class={inputClass}
+			maxlength="1"
+			type="text"
+			on:click
+			bind:value={$InputStore[4].value}
+		/>
 	</div>
 </div>
 

@@ -7,7 +7,6 @@
 	let promptCode;
 	const promptCodeLength = 5;
 
-	// TODO: turn this into a level page template
 	let keyPresses = [];
 
 	const ctrlKeys = ['MetaLeft', 'MetaRight'];
@@ -27,7 +26,6 @@
 		}
 	};
 
-	// TODO: refactor to store
 	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	const numbers = '0123456789';
 	const combo = letters + numbers;
@@ -68,10 +66,6 @@
 
 		// TODO: refresh input values
 	};
-
-	const handleInputFocus = (idx) => {
-		console.log('idx', idx);
-	};
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -83,5 +77,5 @@
 <InputUI {promptCodeLength} />
 
 <!-- {#if promptCode}
-		<div><slot /></div>
+	<div><slot /></div>
 {/if} -->
