@@ -1,11 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
-
+	import Prompt from '../components/Prompt.svelte';
+	import InputUI from '../components/InputUI.svelte';
 	export let idx;
+
 	let promptCode;
 	const promptCodeLength = 5;
-
-	const promptCodeObjArr = Array(promptCodeLength).fill({ value: '' });
 
 	// TODO: turn this into a level page template
 	let keyPresses = [];
@@ -68,6 +68,10 @@
 
 		// TODO: refresh input values
 	};
+
+	const handleInputFocus = (idx) => {
+		console.log('idx', idx);
+	};
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -75,29 +79,9 @@
 <h1 class="m-10 text-center text-2xl underline underline-offset-4" on:click={handleLevelRefresh}>
 	Level {idx}
 </h1>
-<div class="m-5 flex justify-center">
-	<div class="box-content p-4 border-4 rounded-lg">
-		{#if promptCode}
-			<h1 class="text-5xl hover:blur-2xl select-none">{promptCode}</h1>
-		{:else}
-			<div class="text-5xl text-center w-32">⌛</div>
-		{/if}
-	</div>
-</div>
-
-<div class="m-5 flex justify-center">
-	{#each promptCodeObjArr as inputtedCode}
-		<div class="box-content p-4 border-4 rounded-lg m-1">
-			<input class="w-5 h-10 text-5xl m-1" name="input-1" maxlength="1" type="text" />
-		</div>
-	{/each}
-</div>
+<Prompt {promptCode} />
+<InputUI {promptCodeLength} />
 
 <!-- {#if promptCode}
 		<div><slot /></div>
 {/if} -->
-<style>
-	input:focus {
-		outline: none;
-	}
-</style>
