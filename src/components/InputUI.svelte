@@ -18,6 +18,11 @@
 		InputStore.update((currentInputs) => {
 			const copiedInputs = [...currentInputs];
 			copiedInputs[idx].selected = !copiedInputs[idx].selected;
+
+			copiedInputs.map((input, _i) => {
+				if (idx != _i) return (input.selected = false);
+			});
+
 			return copiedInputs;
 		});
 	};

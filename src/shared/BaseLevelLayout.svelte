@@ -76,6 +76,6 @@
 <Prompt {promptCode} />
 <InputUI {promptCodeLength} />
 
-<!-- {#if promptCode}
+{#if promptCode}
 	<div><slot /></div>
-{/if} -->
+{/if}
