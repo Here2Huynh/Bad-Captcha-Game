@@ -4,15 +4,9 @@
 	const boxClass = 'box-content border-4 rounded-lg m-1 w-16 h-20';
 	const inputClass = 'w-full h-full text-center text-5xl outline-slate-400 caret-transparent';
 
-	const handleInput = (idx) => {
-		InputStore.update((currentInputs) => {
-			const copiedInputs = [...currentInputs];
-			// copiedInputs[idx].value = 'T';
-			// TODO: input updates occurs here
-
-			return copiedInputs;
-		});
-	};
+	// TODO: red border if character is wrong
+	// TODO: green border if character is correct
+	// TODO: check win condition
 
 	const handleClick = (idx) => {
 		InputStore.update((currentInputs) => {
@@ -34,13 +28,7 @@
 		class:border-cyan-400={$InputStore[0].selected}
 		on:click={() => handleClick(0)}
 	>
-		<input
-			class={inputClass}
-			maxlength="1"
-			type="text"
-			on:click={() => handleInput(0)}
-			bind:value={$InputStore[0].value}
-		/>
+		<input class={inputClass} maxlength="1" type="text" bind:value={$InputStore[0].value} />
 	</div>
 	<div
 		class={boxClass}

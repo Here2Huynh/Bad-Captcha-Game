@@ -1,7 +1,7 @@
 <script>
 	import BaseLevel from '../shared/BaseLevelLayout.svelte';
 	import Letters from '../stores/lettersStore';
-	import
+	import InputStore from '../stores/inputStore';
 	export let idx;
 
 	let characters = [];
@@ -21,14 +21,23 @@
 	}
 
 	const handleClick = (idx) => {
-		const copy = [...characters];
-		let characterValue = copy[idx].value;
-		if (characterValue == 100) {
+		const copyCharacters = [...characters];
+		if (copyCharacters[idx].value == 100) {
 			// update inputUI
-			// reset the grid
+			InputStore.update((currentInputs) => {
+				const copyInput = [...currentInputs];
+				const selectedInput = copyInput.find((i) => i.selected);
+				selectedInput.value = copyCharacters[idx].letter;
+				return copyInput;
+			});
+			// reset the input grid
+			characters = characters.map((c) => {
+				c.value = getRandomInt(10, 99);
+				return c;
+			});
 		} else {
-			copy[idx].value++;
-			characters = copy;
+			copyCharacters[idx].value++;
+			characters = copyCharacters;
 		}
 	};
 
