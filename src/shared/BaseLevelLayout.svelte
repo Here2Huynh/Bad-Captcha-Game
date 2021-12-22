@@ -6,9 +6,9 @@
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
 	import InputStore from '../stores/inputStore';
+	import PromptCode from '../stores/promptStore';
 	export let idx;
 
-	let promptCode;
 	const promptCodeLength = 5;
 
 	let keyPresses = [];
@@ -58,13 +58,28 @@
 		return result;
 	};
 
-	onMount(() => (promptCode = generatePrompt(promptCodeLength, 'letters')));
+	const updatePromptStore = (randomMode, value) => {
+		PromptCode.update((currentPrompt) => {
+			let copyPrompt = currentPrompt;
+			if (randomMode) {
+				copyPrompt = generatePrompt(promptCodeLength, 'letters');
+			} else {
+				copyPrompt = value;
+			}
+
+			return copyPrompt;
+		});
+	};
+
+	onMount(() => {
+		updatePromptStore(true);
+	});
 
 	const handleLevelRefresh = () => {
-		promptCode = undefined;
+		updatePromptStore(false, undefined);
 		// reset prompt
 		setTimeout(() => {
-			promptCode = generatePrompt(5, 'letters');
+			updatePromptStore(true);
 		}, 500);
 
 		// reset input ui
@@ -78,9 +93,6 @@
 
 			return copyInputs;
 		});
-
-		// TODO: refresh input values
-		// TODO: add nice transition on refresh
 	};
 </script>
 
@@ -92,9 +104,9 @@
 >
 	Level {idx}
 </h1>
-<Prompt {promptCode} />
+<Prompt />
 <InputUI {promptCodeLength} />
 
-{#if promptCode}
+{#if $PromptCode}
 	<div transition:fade><slot /></div>
 {/if}

@@ -3,23 +3,28 @@ import { writable } from 'svelte/store';
 const InputStore = writable([
 	{
 		selected: false,
-		value: ''
+		value: '',
+		disabled: false
 	},
 	{
 		selected: false,
-		value: ''
+		value: '',
+		disabled: false
 	},
 	{
 		selected: false,
-		value: ''
+		value: '',
+		disabled: false
 	},
 	{
 		selected: false,
-		value: ''
+		value: '',
+		disabled: false
 	},
 	{
 		selected: false,
-		value: ''
+		value: '',
+		disabled: false
 	}
 ]);
 

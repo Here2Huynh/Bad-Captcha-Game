@@ -23,9 +23,10 @@
 			InputStore.update((currentInputs) => {
 				const copyInput = [...currentInputs];
 				const selectedInput = copyInput.find((i) => i.selected);
-				if (selectedInput) {
+				if (selectedInput && !selectedInput.disabled) {
 					selectedInput.value = copyCharacters[idx].letter;
 				}
+
 				return copyInput;
 			});
 			// reset the input grid
@@ -48,10 +49,12 @@
 				return 'col-start-4';
 		}
 	};
+
+	// const handleDisable =()
 </script>
 
 <BaseLevel {idx}>
-	<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center">
+	<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 		{#each characters as character, idx (idx)}
 			<div
 				class={`p-4 m-auto w-full rounded shadow ${handleLastRowStyling(idx)}`}
