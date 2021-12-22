@@ -2,6 +2,7 @@
 	import { levels } from '../stores/levelStores';
 </script>
 
+<!-- TODO: add transitions to levels grid -->
 <h1 class="my-8 text-4xl text-center">Levels List</h1>
 <div class="flex justify-center">
 	<div class="w-11/12 rounded-lg lg:w-1/3">

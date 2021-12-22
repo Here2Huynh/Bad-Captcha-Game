@@ -20,7 +20,7 @@
 			copiedInputs[idx].selected = !copiedInputs[idx].selected;
 
 			copiedInputs.map((input, _i) => {
-				if (idx != _i) return (input.selected = false);
+				if (idx != _i) input.selected = false;
 			});
 
 			return copiedInputs;

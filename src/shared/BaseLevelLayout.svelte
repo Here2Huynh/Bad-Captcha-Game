@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import Prompt from '../components/Prompt.svelte';
 	import InputUI from '../components/InputUI.svelte';
+	import Letters from '../stores/lettersStore';
+	import Numbers from '../stores/numbersStore';
 	export let idx;
 
 	let promptCode;
@@ -26,19 +28,17 @@
 		}
 	};
 
-	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	const numbers = '0123456789';
-	const combo = letters + numbers;
+	const combo = $Letters + $Numbers;
 	const generatePrompt = (length, mode = 'combo') => {
 		let result = '';
 		let characters;
 
 		switch (mode) {
 			case 'letters':
-				characters = letters;
+				characters = $Letters;
 				break;
 			case 'numbers':
-				characters = numbers;
+				characters = $Numbers;
 				break;
 			case 'combo':
 				characters = combo;
