@@ -1,9 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import Prompt from '../components/Prompt.svelte';
 	import InputUI from '../components/InputUI.svelte';
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
+	import InputStore from '../stores/inputStore';
 	export let idx;
 
 	let promptCode;
@@ -60,22 +62,39 @@
 
 	const handleLevelRefresh = () => {
 		promptCode = undefined;
+		// reset prompt
 		setTimeout(() => {
 			promptCode = generatePrompt(5, 'letters');
 		}, 500);
 
+		// reset input ui
+		InputStore.update((currentInputs) => {
+			let copyInputs = [...currentInputs];
+			copyInputs = copyInputs.map((i) => {
+				i.selected = false;
+				i.value = '';
+				return i;
+			});
+
+			return copyInputs;
+		});
+
 		// TODO: refresh input values
+		// TODO: add nice transition on refresh
 	};
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
 
-<h1 class="m-10 text-center text-2xl underline underline-offset-4" on:click={handleLevelRefresh}>
+<h1
+	class="m-10 text-center text-2xl underline underline-offset-4 cursor-crosshair"
+	on:click={handleLevelRefresh}
+>
 	Level {idx}
 </h1>
 <Prompt {promptCode} />
 <InputUI {promptCodeLength} />
 
 {#if promptCode}
-	<div><slot /></div>
+	<div transition:fade><slot /></div>
 {/if}

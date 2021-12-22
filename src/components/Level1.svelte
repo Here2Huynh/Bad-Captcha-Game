@@ -14,6 +14,8 @@
 		});
 	}
 
+	characters = characters.sort(() => Math.random() - 0.5);
+
 	const handleClick = (idx) => {
 		const copyCharacters = [...characters];
 		if (copyCharacters[idx].value == 100) {
@@ -21,7 +23,9 @@
 			InputStore.update((currentInputs) => {
 				const copyInput = [...currentInputs];
 				const selectedInput = copyInput.find((i) => i.selected);
-				selectedInput.value = copyCharacters[idx].letter;
+				if (selectedInput) {
+					selectedInput.value = copyCharacters[idx].letter;
+				}
 				return copyInput;
 			});
 			// reset the input grid
@@ -29,6 +33,7 @@
 				c.value = getRandomInt(10, 99);
 				return c;
 			});
+			characters = characters.sort(() => Math.random() - 0.5);
 		} else {
 			copyCharacters[idx].value++;
 			characters = copyCharacters;
