@@ -2,16 +2,10 @@
 	import BaseLevel from '../shared/BaseLevelLayout.svelte';
 	import Letters from '../stores/lettersStore';
 	import InputStore from '../stores/inputStore';
+	import { getRandomInt } from '../shared/helpers/helpers';
 	export let idx;
 
 	let characters = [];
-
-	// TODO: refactor utility functions
-	const getRandomInt = (min, max) => {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	};
 
 	for (let character of $Letters) {
 		characters.push({

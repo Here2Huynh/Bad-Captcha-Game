@@ -1,12 +1,13 @@
 <script>
 	import InputStore from '../stores/inputStore';
 
-	const boxClass = 'box-content border-4 rounded-lg m-1 w-16 h-20';
-	const inputClass = 'w-full h-full text-center text-5xl outline-slate-400 caret-transparent';
-
 	// TODO: red border if character is wrong
 	// TODO: green border if character is correct
 	// TODO: check win condition
+	// TODO: refactor input to be dynamic
+
+	const boxClass = 'box-content border-4 rounded-lg m-1 w-16 h-20';
+	const inputClass = 'w-full h-full text-center text-5xl outline-slate-400 caret-transparent';
 
 	const handleClick = (idx) => {
 		InputStore.update((currentInputs) => {
