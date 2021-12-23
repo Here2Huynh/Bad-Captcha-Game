@@ -1,6 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import { levels } from '../stores/levelStores';
+	import { Levels } from '../stores/levelStores';
 </script>
 
 <div in:fade={{ delay: 500 }}>
@@ -8,7 +8,7 @@
 	<div class="flex justify-center">
 		<div class="w-11/12 rounded-lg lg:w-1/3">
 			<ul class="border-2 border-zinc-600">
-				{#each $levels as level (level.idx)}
+				{#each $Levels as level (level.idx)}
 					<a href={`/levels/${level.idx}`}>
 						<li class="p-3 hover:bg-zinc-600 hover:text-blue-300">
 							{`Level - ${level.idx}`}

@@ -1,76 +1,44 @@
 <script>
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
 	import BaseLevel from '../shared/BaseLevelLayout.svelte';
+	import ProgressBar from './ProgressBar.svelte';
 	import Letters from '../stores/lettersStore';
-	import InputStore from '../stores/inputStore';
+	import CharactersStore from '../stores/charactersStores';
 	import { getRandomInt } from '../shared/helpers/helpers';
+
 	export let idx;
 
-	let characters = [];
+	onMount(() => {
+		CharactersStore.update((currentCharacters) => {
+			let copyCharacters = [...currentCharacters];
+			let characters = [];
 
-	for (let character of $Letters) {
-		characters.push({
-			value: getRandomInt(10, 99),
-			letter: character
+			for (let character of $Letters) {
+				characters.push({
+					value: getRandomInt(10, 99),
+					letter: character
+				});
+			}
+
+			characters.sort(() => Math.random() - 0.5);
+			copyCharacters = characters;
+
+			return copyCharacters;
 		});
-	}
+	});
 
-	characters = characters.sort(() => Math.random() - 0.5);
-
-	const handleClick = (idx) => {
-		const copyCharacters = [...characters];
-		if (copyCharacters[idx].value == 100) {
-			// update inputUI
-			InputStore.update((currentInputs) => {
-				const copyInput = [...currentInputs];
-				const selectedInput = copyInput.find((i) => i.selected);
-				if (selectedInput && !selectedInput.disabled) {
-					selectedInput.value = copyCharacters[idx].letter;
-				}
-
-				return copyInput;
-			});
-			// reset the input grid
-			characters = characters.map((c) => {
-				c.value = getRandomInt(10, 99);
-				return c;
-			});
-			characters = characters.sort(() => Math.random() - 0.5);
-		} else {
-			copyCharacters[idx].value++;
-			characters = copyCharacters;
-		}
-	};
-
-	const handleLastRowStyling = (idx) => {
-		switch (idx) {
-			case characters.length - 2:
-				return 'col-start-3';
-			case characters.length - 1:
-				return 'col-start-4';
-		}
-	};
+	console.log('$CharactersStore', $CharactersStore);
 </script>
 
-<div in:fade={{ delay: 500 }}>
-	<BaseLevel {idx}>
-		<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
-			{#each characters as character, idx (idx)}
-				<div
-					class={`p-4 m-auto w-full rounded shadow ${handleLastRowStyling(idx)}`}
-					on:click={() => handleClick(idx)}
-				>
-					<div class="w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700" on:click>
-						<div
-							class="bg-violet-500 h-4 text-xs font-medium text-slate-50 text-center p-0.5 leading-none rounded-full"
-							style={`width: ${character.value}%`}
-							on:click
-						>
-							{`${character.letter}`}
-						</div>
-					</div>
-				</div>
-			{/each}
-		</div>
-	</BaseLevel>
-</div>
+{#if $CharactersStore.length}
+	<div in:fade={{ delay: 500 }}>
+		<BaseLevel {idx}>
+			<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
+				{#each $CharactersStore as character, idx (idx)}
+					<ProgressBar {idx} {character} />
+				{/each}
+			</div>
+		</BaseLevel>
+	</div>
+{/if}

@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export const levels = writable([
+export const Levels = writable([
 	{
 		idx: 1,
 		name: 'growing bars'
