@@ -1,21 +1,26 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { getContext } from 'svelte';
+
 	import Prompt from '../components/InputUI/Prompt.svelte';
 	import InputUI from '../components/InputUI/InputUI.svelte';
+	import CheatingModal from '../components/CheatingModal.svelte';
+
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
 	import InputStore from '../stores/inputStore';
 	import PromptCode from '../stores/promptStore';
+
 	export let idx;
 
+	let keyPresses = [];
 	const promptCodeLength = 5;
 
-	let keyPresses = [];
+	const { open } = getContext('simple-modal');
 
 	const ctrlKeys = ['MetaLeft', 'MetaRight'];
 	const copyAndPastekeys = ['KeyC', 'KeyV'];
-
 	const handleKeyDown = (e) => {
 		keyPresses.push(e.code);
 
@@ -24,10 +29,32 @@
 			ctrlKeys.includes(keyPresses[0]) &&
 			copyAndPastekeys.includes(keyPresses[1])
 		) {
-			// TODO: upgrade this to a modal
-			alert(`Hey, why you are trying to cheat? ha?`);
+			open(CheatingModal, { message: 'Hey, why you are trying to cheat? Haaa?' });
+
+			keyPresses = [];
+		} else if (keyPresses.length == 2) {
 			keyPresses = [];
 		}
+	};
+
+	const handleLevelRefresh = () => {
+		updatePromptStore(false, undefined);
+		// reset prompt
+		setTimeout(() => {
+			updatePromptStore(true);
+		}, 500);
+
+		// reset input ui
+		InputStore.update((currentInputs) => {
+			let copyInputs = [...currentInputs];
+			copyInputs = copyInputs.map((i) => {
+				i.selected = false;
+				i.value = '';
+				return i;
+			});
+
+			return copyInputs;
+		});
 	};
 
 	const combo = $Letters + $Numbers;
@@ -74,26 +101,6 @@
 	onMount(() => {
 		updatePromptStore(true);
 	});
-
-	const handleLevelRefresh = () => {
-		updatePromptStore(false, undefined);
-		// reset prompt
-		setTimeout(() => {
-			updatePromptStore(true);
-		}, 500);
-
-		// reset input ui
-		InputStore.update((currentInputs) => {
-			let copyInputs = [...currentInputs];
-			copyInputs = copyInputs.map((i) => {
-				i.selected = false;
-				i.value = '';
-				return i;
-			});
-
-			return copyInputs;
-		});
-	};
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -104,6 +111,7 @@
 >
 	Level {idx}
 </h1>
+
 <Prompt />
 <InputUI {promptCodeLength} />
 

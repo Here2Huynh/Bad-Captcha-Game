@@ -1,5 +1,6 @@
 <script>
 	import InputStore from '../../stores/inputStore';
+
 	import InputBox from './InputBox.svelte';
 
 	// TODO: check win condition, will need a modal, reset game

@@ -1,6 +1,7 @@
 <script>
 	import InputStore from '../../stores/inputStore';
 	import PromptCodeStore from '../../stores/promptStore';
+
 	export let boxClass;
 	export let inputClass;
 	export let idx;
@@ -42,7 +43,7 @@
 	class:border-emerald-400={inputCheck}
 	on:click={() => handleClick(idx)}
 >
-	<input class={inputClass} maxlength="1" type="text" bind:value={$InputStore[idx].value} />
+	<input class={inputClass} maxlength="0" type="text" bind:value={$InputStore[idx].value} />
 </div>
 
 <style>
