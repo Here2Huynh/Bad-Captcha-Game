@@ -9,7 +9,7 @@
 </script>
 
 <script>
-	import Level1 from '../../components/Level1.svelte';
+	import Level1 from '../../components/level1/Level1.svelte';
 
 	export let idx;
 </script>

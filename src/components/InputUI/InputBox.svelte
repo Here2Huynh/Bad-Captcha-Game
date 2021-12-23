@@ -1,6 +1,6 @@
 <script>
-	import InputStore from '../stores/inputStore';
-	import PromptCode from '../stores/promptStore';
+	import InputStore from '../../stores/inputStore';
+	import PromptCodeStore from '../../stores/promptStore';
 	export let boxClass;
 	export let inputClass;
 	export let idx;
@@ -8,8 +8,8 @@
 	let inputCheck;
 	let wrong;
 
-	$: if ($PromptCode) {
-		inputCheck = $InputStore[idx].value === $PromptCode[idx];
+	$: if ($PromptCodeStore) {
+		inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
 		if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
 			wrong = !inputCheck;
 

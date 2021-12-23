@@ -1,8 +1,8 @@
 <script>
 	import { tweened } from 'svelte/motion';
-	import CharactersStore from '../stores/charactersStores';
-	import InputStore from '../stores/inputStore';
-	import { getRandomInt } from '../shared/helpers/helpers';
+	import CharactersStore from '../../stores/charactersStores';
+	import InputStore from '../../stores/inputStore';
+	import { getRandomInt } from '../../shared/helpers/helpers';
 
 	export let idx;
 	export let character;

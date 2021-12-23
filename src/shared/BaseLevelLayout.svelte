@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import Prompt from '../components/Prompt.svelte';
-	import InputUI from '../components/InputUI.svelte';
+	import Prompt from '../components/InputUI/Prompt.svelte';
+	import InputUI from '../components/InputUI/InputUI.svelte';
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
 	import InputStore from '../stores/inputStore';

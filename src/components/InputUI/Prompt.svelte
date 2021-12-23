@@ -1,7 +1,5 @@
 <script>
-	import PromptCode from '../stores/promptStore';
-
-	// export let promptCode;
+	import PromptCode from '../../stores/promptStore';
 </script>
 
 <div class="m-5 flex justify-center">

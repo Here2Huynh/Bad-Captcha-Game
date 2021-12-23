@@ -1,11 +1,11 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import BaseLevel from '../shared/BaseLevelLayout.svelte';
+	import BaseLevel from '../../shared/BaseLevelLayout.svelte';
 	import ProgressBar from './ProgressBar.svelte';
-	import Letters from '../stores/lettersStore';
-	import CharactersStore from '../stores/charactersStores';
-	import { getRandomInt } from '../shared/helpers/helpers';
+	import Letters from '../../stores/lettersStore';
+	import CharactersStore from '../../stores/charactersStores';
+	import { getRandomInt } from '../../shared/helpers/helpers';
 
 	export let idx;
 
@@ -27,8 +27,6 @@
 			return copyCharacters;
 		});
 	});
-
-	console.log('$CharactersStore', $CharactersStore);
 </script>
 
 {#if $CharactersStore.length}
