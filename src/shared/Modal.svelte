@@ -231,16 +231,16 @@
 
 {#if Component}
 	<div
-		class="bg"
+		class="box-border fixed z-50 top-0 left-0 flex flex-col justify-center w-screen h-screen bg-zinc-900/60"
 		on:mousedown={handleOuterMousedown}
 		on:mouseup={handleOuterMouseup}
 		bind:this={background}
 		transition:currentTransitionBg={state.transitionBgProps}
 		style={cssBg}
 	>
-		<div class="window-wrap" bind:this={wrap} style={cssWindowWrap}>
+		<div class="relative m-8 h-max" bind:this={wrap} style={cssWindowWrap}>
 			<div
-				class="window"
+				class="relative w-max h-max m-auto rounded-lg bg-white"
 				role="dialog"
 				aria-modal="true"
 				bind:this={modalWindow}
@@ -255,10 +255,22 @@
 					{#if isFunction(state.closeButton)}
 						<svelte:component this={state.closeButton} onClose={close} />
 					{:else}
-						<button on:click={close} class="close" style={cssCloseButton} />
+						<svg
+							on:click={close}
+							fill="none"
+							viewBox="0 0 24 24"
+							id="x-circle"
+							class="block box-border absolute z-50 top-4 right-4 m-0 p-0 w-6 h-6 border-0 rounded-3xl bg-white stroke-black hover:stroke-purple-400 "
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+							/></svg
+						>
 					{/if}
 				{/if}
-				<div class="content" style={cssContent}>
+				<div class="relative p-4 h-1/2 overflow-auto" style={cssContent}>
 					<svelte:component this={Component} />
 				</div>
 			</div>
@@ -267,121 +279,3 @@
 {/if}
 
 <slot />
-
-<style>
-	* {
-		box-sizing: border-box;
-	}
-
-	.bg {
-		position: fixed;
-		z-index: 1000;
-		top: 0;
-		left: 0;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.66);
-	}
-
-	.window-wrap {
-		position: relative;
-		margin: 2rem;
-		max-height: 100%;
-	}
-
-	.window {
-		position: relative;
-		width: 40rem;
-		max-width: 100%;
-		max-height: 100%;
-		margin: 2rem auto;
-		color: black;
-		border-radius: 0.5rem;
-		background: white;
-	}
-
-	.content {
-		position: relative;
-		padding: 1rem;
-		max-height: calc(100vh - 4rem);
-		overflow: auto;
-	}
-
-	.close {
-		display: block;
-		box-sizing: border-box;
-		position: absolute;
-		z-index: 1000;
-		top: 1rem;
-		right: 1rem;
-		margin: 0;
-		padding: 0;
-		width: 1.5rem;
-		height: 1.5rem;
-		border: 0;
-		color: black;
-		border-radius: 1.5rem;
-		background: white;
-		box-shadow: 0 0 0 1px black;
-		transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-			background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-		-webkit-appearance: none;
-	}
-
-	.close:before,
-	.close:after {
-		content: '';
-		display: block;
-		box-sizing: border-box;
-		position: absolute;
-		top: 50%;
-		width: 1rem;
-		height: 1px;
-		background: black;
-		transform-origin: center;
-		transition: height 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-			background 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-	}
-
-	.close:before {
-		-webkit-transform: translate(0, -50%) rotate(45deg);
-		-moz-transform: translate(0, -50%) rotate(45deg);
-		transform: translate(0, -50%) rotate(45deg);
-		left: 0.25rem;
-	}
-
-	.close:after {
-		-webkit-transform: translate(0, -50%) rotate(-45deg);
-		-moz-transform: translate(0, -50%) rotate(-45deg);
-		transform: translate(0, -50%) rotate(-45deg);
-		left: 0.25rem;
-	}
-
-	.close:hover {
-		background: black;
-	}
-
-	.close:hover:before,
-	.close:hover:after {
-		height: 2px;
-		background: white;
-	}
-
-	.close:focus {
-		border-color: #3399ff;
-		box-shadow: 0 0 0 2px #3399ff;
-	}
-
-	.close:active {
-		transform: scale(0.9);
-	}
-
-	.close:hover,
-	.close:focus,
-	.close:active {
-		outline: none;
-	}
-</style>

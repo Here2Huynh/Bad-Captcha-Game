@@ -10,7 +10,7 @@
 			<ul class="border-2 border-zinc-600">
 				{#each $Levels as level (level.idx)}
 					<a href={`/levels/${level.idx}`}>
-						<li class="p-3 hover:bg-zinc-600 hover:text-blue-300">
+						<li class="p-3 hover:bg-zinc-600 hover:text-purple-400">
 							{`Level - ${level.idx}`}
 						</li>
 					</a>
