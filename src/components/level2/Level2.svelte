@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 
 	import BaseLevel from '../../shared/BaseLevelLayout.svelte';
-	import ProgressBar from './ProgressBar.svelte';
 	import Modal from '../../shared/Modal.svelte';
 	import { getRandomInt } from '../../shared/helpers/helpers';
 
@@ -81,7 +80,23 @@
 			>
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
-						<ProgressBar {idx} {character} on:input-entered={checkWinCondition} />
+						<!-- <button>{character.letter}</button> -->
+						<!-- Show tooltip on top -->
+						<!-- <button
+							data-tooltip-target="tooltip-top"
+							data-tooltip-placement="top"
+							type="button"
+							class="mb-2 md:mb-0 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+							>Tooltip top</button
+						>
+						<div
+							id="tooltip-top"
+							role="tooltip"
+							class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+						>
+							Tooltip on top
+							<div class="tooltip-arrow" data-popper-arrow />
+						</div> -->
 					{/each}
 				</div>
 			</BaseLevel>

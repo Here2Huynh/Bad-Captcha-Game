@@ -7,11 +7,11 @@ export const Levels = writable([
 	},
 	{
 		idx: 2,
-		name: 'dragging time match'
+		name: 'annoying buttons'
 	},
 	{
 		idx: 3,
-		name: 'growing bars'
+		name: 'dragging time match'
 	},
 	{
 		idx: 4,
