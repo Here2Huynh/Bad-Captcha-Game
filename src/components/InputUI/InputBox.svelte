@@ -1,35 +1,9 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import InputStore from '../../stores/inputStore';
-	import PromptCodeStore from '../../stores/promptStore';
 
 	export let boxClass;
 	export let inputClass;
 	export let idx;
-	// export let wrong;
-	// export let inputCheck;
-
-	// const dispatch = createEventDispatcher();
-
-	// $: inputCheck = $PromptCodeStore ? $InputStore[idx].value === $PromptCodeStore[idx] : true;
-	// $: wrong = !inputCheck;
-
-	// $: if ($PromptCodeStore) {
-	// 	inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
-
-	// 	if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
-	// 		wrong = !inputCheck;
-
-	// 		// InputStore.update((currentInputs) => {
-	// 		// 	const copiedInputs = [...currentInputs];
-	// 		// 	copiedInputs[idx].disabled = wrong;
-
-	// 		// 	return copiedInputs;
-	// 		// });
-
-	// 		dispatch('input-entered', idx);
-	// 	}
-	// }
 
 	const handleClick = (idx) => {
 		InputStore.update((currentInputs) => {
@@ -41,8 +15,6 @@
 
 			return copiedInputs;
 		});
-
-		// dispatch('input-entered', idx);
 	};
 </script>
 

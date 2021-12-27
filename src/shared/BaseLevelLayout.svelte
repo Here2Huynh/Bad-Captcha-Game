@@ -6,21 +6,18 @@
 	import Prompt from '../components/InputUI/Prompt.svelte';
 	import InputUI from '../components/InputUI/InputUI.svelte';
 	import CheatingModal from '../components/CheatingModal.svelte';
+	import LoserModal from '../components/LoserModal.svelte';
+	import WinnerModal from '../components/WinnerModal.svelte';
 
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
 	import InputStore from '../stores/inputStore';
 	import PromptCodeStore from '../stores/promptStore';
 
-	import Modal from './Modal.svelte';
-
 	export let idx;
-	export let lostCondition = false;
 
 	let keyPresses = [];
 	const promptCodeLength = 5;
-	// $: wrong = false;
-	// $: inputCheck = false;
 
 	const { open } = getContext('simple-modal');
 
@@ -42,7 +39,7 @@
 		}
 	};
 
-	const handleLevelRefresh = () => {
+	export const handleLevelRefresh = () => {
 		updatePromptStore(false, undefined);
 		// reset prompt
 		setTimeout(() => {
@@ -55,6 +52,8 @@
 			copyInputs = copyInputs.map((i) => {
 				i.selected = false;
 				i.value = '';
+				i.correct = null;
+				i.wrong = null;
 				return i;
 			});
 
@@ -103,26 +102,17 @@
 		});
 	};
 
+	export const openLoserModal = () => {
+		open(LoserModal, { message: 'AI DETECTED!!' });
+	};
+
+	export const openWinnerModal = () => {
+		open(WinnerModal, { message: 'A tenacious human detected!' });
+	};
+
 	onMount(() => {
 		updatePromptStore(true);
 	});
-
-	// $: if ($PromptCodeStore) {
-	// 	inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
-
-	// 	if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
-	// 		wrong = !inputCheck;
-
-	// 		InputStore.update((currentInputs) => {
-	// 			const copiedInputs = [...currentInputs];
-	// 			copiedInputs[idx].disabled = wrong;
-
-	// 			return copiedInputs;
-	// 		});
-
-	// 		dispatch('input-entered');
-	// 	}
-	// }
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -134,10 +124,8 @@
 	Level {idx}
 </h1>
 
-<Modal show={lostCondition}>
-	<Prompt />
-	<InputUI {promptCodeLength} />
-</Modal>
+<Prompt />
+<InputUI />
 
 {#if $PromptCodeStore}
 	<div transition:fade><slot /></div>
