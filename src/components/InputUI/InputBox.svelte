@@ -1,27 +1,35 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
 	import InputStore from '../../stores/inputStore';
 	import PromptCodeStore from '../../stores/promptStore';
 
 	export let boxClass;
 	export let inputClass;
 	export let idx;
+	// export let wrong;
+	// export let inputCheck;
 
-	let inputCheck;
-	let wrong;
+	// const dispatch = createEventDispatcher();
 
-	$: if ($PromptCodeStore) {
-		inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
-		if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
-			wrong = !inputCheck;
+	// $: inputCheck = $PromptCodeStore ? $InputStore[idx].value === $PromptCodeStore[idx] : true;
+	// $: wrong = !inputCheck;
 
-			InputStore.update((currentInputs) => {
-				const copiedInputs = [...currentInputs];
-				copiedInputs[idx].disabled = wrong;
+	// $: if ($PromptCodeStore) {
+	// 	inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
 
-				return copiedInputs;
-			});
-		}
-	}
+	// 	if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
+	// 		wrong = !inputCheck;
+
+	// 		// InputStore.update((currentInputs) => {
+	// 		// 	const copiedInputs = [...currentInputs];
+	// 		// 	copiedInputs[idx].disabled = wrong;
+
+	// 		// 	return copiedInputs;
+	// 		// });
+
+	// 		dispatch('input-entered', idx);
+	// 	}
+	// }
 
 	const handleClick = (idx) => {
 		InputStore.update((currentInputs) => {
@@ -33,14 +41,16 @@
 
 			return copiedInputs;
 		});
+
+		// dispatch('input-entered', idx);
 	};
 </script>
 
 <div
 	class={boxClass}
 	class:border-cyan-400={$InputStore[idx].selected}
-	class:border-red-600={wrong}
-	class:border-emerald-400={inputCheck}
+	class:border-red-600={$InputStore[idx].wrong}
+	class:border-emerald-400={$InputStore[idx].correct}
 	on:click={() => handleClick(idx)}
 >
 	<input class={inputClass} maxlength="0" type="text" bind:value={$InputStore[idx].value} />

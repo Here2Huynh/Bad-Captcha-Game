@@ -4,27 +4,37 @@ const InputStore = writable([
 	{
 		selected: false,
 		value: '',
-		disabled: false
+		disabled: false,
+		correct: null,
+		wrong: null
 	},
 	{
 		selected: false,
 		value: '',
-		disabled: false
+		disabled: false,
+		correct: null,
+		wrong: null
 	},
 	{
 		selected: false,
 		value: '',
-		disabled: false
+		disabled: false,
+		correct: null,
+		wrong: null
 	},
 	{
 		selected: false,
 		value: '',
-		disabled: false
+		disabled: false,
+		correct: null,
+		wrong: null
 	},
 	{
 		selected: false,
 		value: '',
-		disabled: false
+		disabled: false,
+		correct: null,
+		wrong: null
 	}
 ]);
 

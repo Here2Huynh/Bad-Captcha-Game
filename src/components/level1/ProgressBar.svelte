@@ -1,5 +1,6 @@
 <script>
 	import { tweened } from 'svelte/motion';
+	import { createEventDispatcher } from 'svelte';
 
 	import CharactersStore from '../../stores/charactersStores';
 	import InputStore from '../../stores/inputStore';
@@ -8,6 +9,8 @@
 
 	export let idx;
 	export let character;
+
+	const dispatch = createEventDispatcher();
 
 	const tweenA = tweened(0);
 	$: tweenA.set(parseInt(character.value));
@@ -26,6 +29,9 @@
 
 					return copyInput;
 				});
+
+				dispatch('input-entered');
+
 				// reset the input grid
 				copyCharacters = copyCharacters.map((c) => {
 					c.value = getRandomInt(10, 99);

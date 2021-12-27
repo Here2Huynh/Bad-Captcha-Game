@@ -10,12 +10,17 @@
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
 	import InputStore from '../stores/inputStore';
-	import PromptCode from '../stores/promptStore';
+	import PromptCodeStore from '../stores/promptStore';
+
+	import Modal from './Modal.svelte';
 
 	export let idx;
+	export let lostCondition = false;
 
 	let keyPresses = [];
 	const promptCodeLength = 5;
+	// $: wrong = false;
+	// $: inputCheck = false;
 
 	const { open } = getContext('simple-modal');
 
@@ -86,7 +91,7 @@
 	};
 
 	const updatePromptStore = (randomMode, value) => {
-		PromptCode.update((currentPrompt) => {
+		PromptCodeStore.update((currentPrompt) => {
 			let copyPrompt = currentPrompt;
 			if (randomMode) {
 				copyPrompt = generatePrompt(promptCodeLength, 'letters');
@@ -101,6 +106,23 @@
 	onMount(() => {
 		updatePromptStore(true);
 	});
+
+	// $: if ($PromptCodeStore) {
+	// 	inputCheck = $InputStore[idx].value === $PromptCodeStore[idx];
+
+	// 	if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
+	// 		wrong = !inputCheck;
+
+	// 		InputStore.update((currentInputs) => {
+	// 			const copiedInputs = [...currentInputs];
+	// 			copiedInputs[idx].disabled = wrong;
+
+	// 			return copiedInputs;
+	// 		});
+
+	// 		dispatch('input-entered');
+	// 	}
+	// }
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
@@ -112,9 +134,11 @@
 	Level {idx}
 </h1>
 
-<Prompt />
-<InputUI {promptCodeLength} />
+<Modal show={lostCondition}>
+	<Prompt />
+	<InputUI {promptCodeLength} />
+</Modal>
 
-{#if $PromptCode}
+{#if $PromptCodeStore}
 	<div transition:fade><slot /></div>
 {/if}
