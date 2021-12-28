@@ -15,6 +15,8 @@
 
 	export let idx;
 
+	let fauxChars = [];
+
 	// function binded from child
 	let openLoser;
 	let openWinner;
@@ -31,9 +33,12 @@
 					letter: character,
 					side: getRandomInt(0, 1)
 				});
+
+				fauxChars.push(character);
 			}
 
 			characters.sort(() => Math.random() - 0.5);
+			fauxChars.sort(() => Math.random() - 0.5);
 			copyCharacters = characters;
 
 			return copyCharacters;
@@ -96,13 +101,15 @@
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
 						<div
-							class={`p-4 w-12 border rounded text-center relative ${handleLastRowStyling(idx)}`}
+							class={`p-4 w-12 border rounded text-center relative cursor-pointer ${handleLastRowStyling(
+								idx
+							)} hover:bg-lime-400 hover:text-white`}
 							on:mouseenter={() => (character.show = true)}
 							on:mouseleave={() => (character.show = false)}
 						>
-							{character.letter}
+							{fauxChars[idx]}
 							<Tooltip
-								pointer="start"
+								pointer={character.side == 0 ? 'start' : 'end'}
 								position={character.side == 0 ? 'right' : 'left'}
 								text={character.letter}
 								w="48"

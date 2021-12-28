@@ -5,9 +5,9 @@ module.exports = {
 		content: ['./src/**/*.svelte'],
 		// These options are passed through directly to PurgeCSS
 		options: {
-			// Generate col-span-1 -> 12
 			safelist: [
 				'bg-gray-400',
+				'fill-gray-400',
 				'text-white',
 				'opacity-0',
 				'opacity-100',

@@ -1,5 +1,7 @@
 <script>
 	// https://github.com/fouita/svelte-tw-tooltip
+	//NOTE: purgecss doesn't recognize dynamic classes, will need to manually exclude in order to be customizable
+	// https://stackoverflow.com/questions/65542265/adding-dynamic-class-name-in-svelte/65542731#65542731
 
 	import { fade } from 'svelte/transition';
 
@@ -81,15 +83,12 @@
 	>
 		<div class="relative shadow-md">
 			<slot>
-				<!-- NOTE: purgecss doesn't recognize dynamic classes, will need to manually exclude
-                    https://stackoverflow.com/questions/65542265/adding-dynamic-class-name-in-svelte/65542731#65542731
-                -->
 				<div class={`bg-${color} text-${text_color} truncate text-xs rounded py-1 px-4`}>
 					{text}
 				</div>
 			</slot>
 			<svg
-				class={`absolute text-${color}
+				class={`absolute text-${color} fill-${color}
           ${cursor_class} h-2 ${pointer_class}
           ${position}-100`}
 				x="0px"
@@ -97,7 +96,7 @@
 				viewBox="0 0 255 255"
 				xml:space="preserve"
 			>
-				<polygon class={`bg-${color}`} points={points[position]} />
+				<polygon points={points[position]} />
 			</svg>
 		</div>
 	</div>
