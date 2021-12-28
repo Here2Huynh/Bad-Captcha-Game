@@ -81,6 +81,9 @@
 	>
 		<div class="relative shadow-md">
 			<slot>
+				<!-- NOTE: purgecss doesn't recognize dynamic classes, will need to manually exclude
+                    https://stackoverflow.com/questions/65542265/adding-dynamic-class-name-in-svelte/65542731#65542731
+                -->
 				<div class={`bg-${color} text-${text_color} truncate text-xs rounded py-1 px-4`}>
 					{text}
 				</div>
@@ -94,7 +97,7 @@
 				viewBox="0 0 255 255"
 				xml:space="preserve"
 			>
-				<polygon class="fill-current" points={points[position]} />
+				<polygon class={`bg-${color}`} points={points[position]} />
 			</svg>
 		</div>
 	</div>

@@ -102,7 +102,7 @@
 						>
 							{character.letter}
 							<Tooltip
-								pointer="middle"
+								pointer="start"
 								position={character.side == 0 ? 'right' : 'left'}
 								text={character.letter}
 								w="48"
