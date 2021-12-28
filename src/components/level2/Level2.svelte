@@ -5,6 +5,7 @@
 	import BaseLevel from '../../shared/BaseLevelLayout.svelte';
 	import Modal from '../../shared/Modal.svelte';
 	import { getRandomInt } from '../../shared/helpers/helpers';
+	import Tooltip from '../../shared/Tooltip.svelte';
 
 	import Letters from '../../stores/lettersStore';
 	import CharactersStore from '../../stores/charactersStores';
@@ -26,8 +27,9 @@
 
 			for (let character of $Letters) {
 				characters.push({
-					value: getRandomInt(10, 99),
-					letter: character
+					show: false,
+					letter: character,
+					side: getRandomInt(0, 1)
 				});
 			}
 
@@ -67,6 +69,19 @@
 			}
 		}
 	};
+
+	const handleLastRowStyling = (idx) => {
+		switch (idx) {
+			case $CharactersStore.length - 2:
+				return 'col-start-3';
+			case $CharactersStore.length - 1:
+				return 'col-start-4';
+		}
+	};
+
+	// const randomizeSides = () => {
+	// 	getRandomInt(0, 1);
+	// };
 </script>
 
 {#if $CharactersStore.length}
@@ -80,26 +95,23 @@
 			>
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
-						<!-- <button>{character.letter}</button> -->
-						<!-- Show tooltip on top -->
-						<!-- <button
-							data-tooltip-target="tooltip-top"
-							data-tooltip-placement="top"
-							type="button"
-							class="mb-2 md:mb-0 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-							>Tooltip top</button
-						>
 						<div
-							id="tooltip-top"
-							role="tooltip"
-							class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+							class={`p-4 w-12 border rounded text-center relative ${handleLastRowStyling(idx)}`}
+							on:mouseenter={() => (character.show = true)}
+							on:mouseleave={() => (character.show = false)}
 						>
-							Tooltip on top
-							<div class="tooltip-arrow" data-popper-arrow />
-						</div> -->
+							{character.letter}
+							<Tooltip
+								pointer="middle"
+								position={character.side == 0 ? 'right' : 'left'}
+								text={character.letter}
+								w="48"
+								show={character.show}
+							/>
+						</div>
 					{/each}
 				</div>
 			</BaseLevel>
-		</Modal>;
+		</Modal>
 	</div>
 {/if}
