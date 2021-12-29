@@ -54,6 +54,7 @@
 				i.value = '';
 				i.correct = null;
 				i.wrong = null;
+				i.disabled = false;
 				return i;
 			});
 

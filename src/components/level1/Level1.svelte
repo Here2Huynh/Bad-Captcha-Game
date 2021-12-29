@@ -39,7 +39,7 @@
 		});
 	});
 
-	const checkWinCondition = (e) => {
+	const checkWinCondition = () => {
 		const idx = $InputStore.findIndex((input) => input.selected);
 
 		if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {

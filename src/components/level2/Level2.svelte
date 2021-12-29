@@ -18,6 +18,7 @@
 	let fauxChars = [];
 
 	// function binded from child
+	// TODO: I think this can be refactored to be cleaner, export single function from base
 	let openLoser;
 	let openWinner;
 	let levelRefresh;
@@ -45,16 +46,16 @@
 		});
 	});
 
-	const checkWinCondition = (e) => {
-		const idx = $InputStore.findIndex((input) => input.selected);
+	const checkWinCondition = () => {
+		const liveIdx = $InputStore.findIndex((input) => input.selected);
 
-		if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
+		if ($InputStore[liveIdx].value.length && !$InputStore[liveIdx].disabled) {
 			InputStore.update((currentInputs) => {
 				const copiedInputs = [...currentInputs];
-				const correct = $InputStore[idx].value === $PromptCodeStore[idx];
-				copiedInputs[idx].disabled = !correct;
-				copiedInputs[idx].correct = correct;
-				copiedInputs[idx].wrong = !correct;
+				const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
+				copiedInputs[liveIdx].disabled = !correct;
+				copiedInputs[liveIdx].correct = correct;
+				copiedInputs[liveIdx].wrong = !correct;
 
 				return copiedInputs;
 			});
@@ -118,19 +119,7 @@
 		});
 
 		// TODO: add correctness check between the prompt and input values
-
-		// console.log('$InputStore[idx]', $InputStore[idx]);
-		// if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
-		// 	InputStore.update((currentInputs) => {
-		// 		const copiedInputs = [...currentInputs];
-		// 		const correct = $InputStore[idx].value === $PromptCodeStore[idx];
-		// 		copiedInputs[idx].disabled = !correct;
-		// 		copiedInputs[idx].correct = correct;
-		// 		copiedInputs[idx].wrong = !correct;
-
-		// 		return copiedInputs;
-		// 	});
-		// }
+		checkWinCondition(idx);
 	};
 </script>
 
