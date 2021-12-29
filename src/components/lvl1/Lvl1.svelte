@@ -8,17 +8,13 @@
 	import { getRandomInt } from '../../shared/helpers/helpers';
 
 	import Letters from '../../stores/lettersStore';
-	import CharactersStore from '../../stores/charactersStores';
+	import CharactersStore from '../../stores/charactersStore';
 	import { CheatingModalStore } from '../../stores/cheatingStore.js';
-	import InputStore from '../../stores/inputStore';
-	import PromptCodeStore from '../../stores/promptStore';
 
 	export let idx;
 
 	// function binded from child
-	let openLoser;
-	let openWinner;
-	let levelRefresh;
+	let checkWinCondition;
 
 	onMount(() => {
 		CharactersStore.update((currentCharacters) => {
@@ -38,47 +34,12 @@
 			return copyCharacters;
 		});
 	});
-
-	const checkWinCondition = () => {
-		const idx = $InputStore.findIndex((input) => input.selected);
-
-		if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
-			InputStore.update((currentInputs) => {
-				const copiedInputs = [...currentInputs];
-				const correct = $InputStore[idx].value === $PromptCodeStore[idx];
-				copiedInputs[idx].disabled = !correct;
-				copiedInputs[idx].correct = correct;
-				copiedInputs[idx].wrong = !correct;
-
-				return copiedInputs;
-			});
-		}
-
-		const currentInput = $InputStore.reduce((prev, curr) => (prev += curr.value), '');
-
-		if (currentInput.length === $PromptCodeStore.length) {
-			if (currentInput === $PromptCodeStore) {
-				console.log('you show tenacity yung 1');
-				levelRefresh();
-				openWinner();
-			} else {
-				console.log('you lost ha~ ha~');
-				levelRefresh();
-				openLoser();
-			}
-		}
-	};
 </script>
 
 {#if $CharactersStore.length}
 	<div in:fade={{ delay: 500 }}>
 		<Modal show={$CheatingModalStore}>
-			<BaseLevel
-				{idx}
-				bind:openLoserModal={openLoser}
-				bind:openWinnerModal={openWinner}
-				bind:handleLevelRefresh={levelRefresh}
-			>
+			<BaseLevel {idx} bind:checkWinCondition>
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
 						<ProgressBar {idx} {character} on:input-entered={checkWinCondition} />

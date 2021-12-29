@@ -2,7 +2,7 @@
 	import { tweened } from 'svelte/motion';
 	import { createEventDispatcher } from 'svelte';
 
-	import CharactersStore from '../../stores/charactersStores';
+	import CharactersStore from '../../stores/charactersStore';
 	import InputStore from '../../stores/inputStore';
 
 	import { getRandomInt } from '../../shared/helpers/helpers';

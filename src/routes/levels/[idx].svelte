@@ -9,8 +9,8 @@
 </script>
 
 <script>
-	import Level1 from '../../components/level1/Level1.svelte';
-	import Level2 from '../../components/level2/Level2.svelte';
+	import Level1 from '../../components/lvl1/Lvl1.svelte';
+	import Level2 from '../../components/lvl2/Lvl2.svelte';
 
 	export let idx;
 </script>

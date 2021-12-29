@@ -8,20 +8,16 @@
 	import Tooltip from '../../shared/Tooltip.svelte';
 
 	import Letters from '../../stores/lettersStore';
-	import CharactersStore from '../../stores/charactersStores';
-	import { CheatingModalStore } from '../../stores/cheatingStore.js';
+	import CharactersStore from '../../stores/charactersStore';
+	import { CheatingModalStore } from '../../stores/cheatingStore';
 	import InputStore from '../../stores/inputStore';
-	import PromptCodeStore from '../../stores/promptStore';
 
 	export let idx;
 
 	let fauxChars = [];
 
 	// function binded from child
-	// TODO: I think this can be refactored to be cleaner, export single function from base
-	let openLoser;
-	let openWinner;
-	let levelRefresh;
+	let checkWinCondition;
 
 	onMount(() => {
 		CharactersStore.update((currentCharacters) => {
@@ -45,36 +41,6 @@
 			return copyCharacters;
 		});
 	});
-
-	const checkWinCondition = () => {
-		const liveIdx = $InputStore.findIndex((input) => input.selected);
-
-		if ($InputStore[liveIdx].value.length && !$InputStore[liveIdx].disabled) {
-			InputStore.update((currentInputs) => {
-				const copiedInputs = [...currentInputs];
-				const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
-				copiedInputs[liveIdx].disabled = !correct;
-				copiedInputs[liveIdx].correct = correct;
-				copiedInputs[liveIdx].wrong = !correct;
-
-				return copiedInputs;
-			});
-		}
-
-		const currentInput = $InputStore.reduce((prev, curr) => (prev += curr.value), '');
-
-		if (currentInput.length === $PromptCodeStore.length) {
-			if (currentInput === $PromptCodeStore) {
-				console.log('you show tenacity yung 1');
-				levelRefresh();
-				openWinner();
-			} else {
-				console.log('you lost ha~ ha~');
-				levelRefresh();
-				openLoser();
-			}
-		}
-	};
 
 	const handleLastRowStyling = (idx) => {
 		switch (idx) {
@@ -118,20 +84,14 @@
 			return copyCharacters;
 		});
 
-		// TODO: add correctness check between the prompt and input values
-		checkWinCondition(idx);
+		checkWinCondition();
 	};
 </script>
 
 {#if $CharactersStore.length}
 	<div in:fade={{ delay: 500 }}>
 		<Modal show={$CheatingModalStore}>
-			<BaseLevel
-				{idx}
-				bind:openLoserModal={openLoser}
-				bind:openWinnerModal={openWinner}
-				bind:handleLevelRefresh={levelRefresh}
-			>
+			<BaseLevel {idx} bind:checkWinCondition>
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
 						<div

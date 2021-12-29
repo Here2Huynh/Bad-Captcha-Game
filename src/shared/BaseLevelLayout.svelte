@@ -5,9 +5,9 @@
 
 	import Prompt from '../components/InputUI/Prompt.svelte';
 	import InputUI from '../components/InputUI/InputUI.svelte';
-	import CheatingModal from '../components/CheatingModal.svelte';
-	import LoserModal from '../components/LoserModal.svelte';
-	import WinnerModal from '../components/WinnerModal.svelte';
+	import CheatingModal from '../components/utility/CheatingModal.svelte';
+	import LoserModal from '../components/utility/LoserModal.svelte';
+	import WinnerModal from '../components/utility/WinnerModal.svelte';
 
 	import Letters from '../stores/lettersStore';
 	import Numbers from '../stores/numbersStore';
@@ -39,7 +39,7 @@
 		}
 	};
 
-	export const handleLevelRefresh = () => {
+	const handleLevelRefresh = () => {
 		updatePromptStore(false, undefined);
 		// reset prompt
 		setTimeout(() => {
@@ -103,12 +103,42 @@
 		});
 	};
 
-	export const openLoserModal = () => {
+	const openLoserModal = () => {
 		open(LoserModal, { message: 'AI DETECTED!!' });
 	};
 
-	export const openWinnerModal = () => {
+	const openWinnerModal = () => {
 		open(WinnerModal, { message: 'A tenacious human detected!' });
+	};
+
+	export const checkWinCondition = () => {
+		const liveIdx = $InputStore.findIndex((input) => input.selected);
+
+		if ($InputStore[liveIdx].value.length && !$InputStore[liveIdx].disabled) {
+			InputStore.update((currentInputs) => {
+				const copiedInputs = [...currentInputs];
+				const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
+				copiedInputs[liveIdx].disabled = !correct;
+				copiedInputs[liveIdx].correct = correct;
+				copiedInputs[liveIdx].wrong = !correct;
+
+				return copiedInputs;
+			});
+		}
+
+		const currentInput = $InputStore.reduce((prev, curr) => (prev += curr.value), '');
+
+		if (currentInput.length === $PromptCodeStore.length) {
+			if (currentInput === $PromptCodeStore) {
+				console.log('you show tenacity yung 1');
+				handleLevelRefresh();
+				openWinnerModal();
+			} else {
+				console.log('you lost ha~ ha~');
+				handleLevelRefresh();
+				openLoserModal();
+			}
+		}
 	};
 
 	onMount(() => {
