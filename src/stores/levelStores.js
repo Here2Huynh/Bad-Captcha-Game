@@ -8,6 +8,10 @@ export const Levels = writable([
 	{
 		idx: 2,
 		name: 'annoying buttons'
+	},
+	{
+		idx: 3,
+		name: 'random chaos'
 	}
 	// {
 	// 	idx: 3,

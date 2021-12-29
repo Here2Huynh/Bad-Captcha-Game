@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { getContext } from 'svelte';
 
@@ -15,6 +15,7 @@
 	import PromptCodeStore from '../stores/promptStore';
 
 	export let idx;
+	export let promptMode = 'letters';
 
 	let keyPresses = [];
 	const promptCodeLength = 5;
@@ -94,7 +95,7 @@
 		PromptCodeStore.update((currentPrompt) => {
 			let copyPrompt = currentPrompt;
 			if (randomMode) {
-				copyPrompt = generatePrompt(promptCodeLength, 'letters');
+				copyPrompt = generatePrompt(promptCodeLength, promptMode);
 			} else {
 				copyPrompt = value;
 			}
@@ -114,7 +115,11 @@
 	export const checkWinCondition = () => {
 		const liveIdx = $InputStore.findIndex((input) => input.selected);
 
-		if ($InputStore[liveIdx].value.length && !$InputStore[liveIdx].disabled) {
+		if (
+			$InputStore[liveIdx] &&
+			$InputStore[liveIdx].value.length &&
+			!$InputStore[liveIdx].disabled
+		) {
 			InputStore.update((currentInputs) => {
 				const copiedInputs = [...currentInputs];
 				const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
@@ -143,6 +148,10 @@
 
 	onMount(() => {
 		updatePromptStore(true);
+	});
+
+	onDestroy(() => {
+		handleLevelRefresh();
 	});
 </script>
 
