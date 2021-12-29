@@ -84,9 +84,54 @@
 		}
 	};
 
-	// const randomizeSides = () => {
-	// 	getRandomInt(0, 1);
-	// };
+	const handleClick = (idx) => {
+		CharactersStore.update((currentCharacters) => {
+			const copyCharacters = [...currentCharacters];
+
+			InputStore.update((currentInputs) => {
+				let copyInputs = [...currentInputs];
+				const selectedInput = copyInputs.find((i) => i.selected);
+				if (selectedInput && !selectedInput.disabled) {
+					selectedInput.value = $CharactersStore[idx].letter;
+				}
+
+				return copyInputs;
+			});
+
+			fauxChars = [];
+			for (let character of $Letters) {
+				fauxChars.push(character);
+			}
+
+			// reset and shuffle the characters
+			copyCharacters.map((c) => {
+				c.show = false;
+				c.side = getRandomInt(0, 1);
+
+				return c;
+			});
+
+			copyCharacters.sort(() => Math.random() - 0.5);
+			fauxChars.sort(() => Math.random() - 0.5);
+
+			return copyCharacters;
+		});
+
+		// TODO: add correctness check between the prompt and input values
+
+		// console.log('$InputStore[idx]', $InputStore[idx]);
+		// if ($InputStore[idx].value.length && !$InputStore[idx].disabled) {
+		// 	InputStore.update((currentInputs) => {
+		// 		const copiedInputs = [...currentInputs];
+		// 		const correct = $InputStore[idx].value === $PromptCodeStore[idx];
+		// 		copiedInputs[idx].disabled = !correct;
+		// 		copiedInputs[idx].correct = correct;
+		// 		copiedInputs[idx].wrong = !correct;
+
+		// 		return copiedInputs;
+		// 	});
+		// }
+	};
 </script>
 
 {#if $CharactersStore.length}
@@ -106,6 +151,7 @@
 							)} hover:bg-lime-400 hover:text-white`}
 							on:mouseenter={() => (character.show = true)}
 							on:mouseleave={() => (character.show = false)}
+							on:click={() => handleClick(idx)}
 						>
 							{fauxChars[idx]}
 							<Tooltip
