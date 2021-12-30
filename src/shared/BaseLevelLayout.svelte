@@ -112,36 +112,55 @@
 		open(WinnerModal, { message: 'A tenacious human detected!' });
 	};
 
-	export const checkWinCondition = () => {
-		const liveIdx = $InputStore.findIndex((input) => input.selected);
-
-		if (
-			$InputStore[liveIdx] &&
-			$InputStore[liveIdx].value.length &&
-			!$InputStore[liveIdx].disabled
-		) {
+	export const checkWinCondition = (multi = false) => {
+		if (multi) {
 			InputStore.update((currentInputs) => {
 				const copiedInputs = [...currentInputs];
-				const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
-				copiedInputs[liveIdx].disabled = !correct;
-				copiedInputs[liveIdx].correct = correct;
-				copiedInputs[liveIdx].wrong = !correct;
+				copiedInputs.map((input, idx) => {
+					//TODO: fix correct label bug
+					const correct = input.value === $PromptCodeStore[idx];
+					if (correct) {
+						input.correct = correct;
+						input.disabled = !correct;
+					} else {
+						input.wrong = correct;
+						input.disabled = !correct;
+					}
+				});
 
 				return copiedInputs;
 			});
-		}
+		} else {
+			const liveIdx = $InputStore.findIndex((input) => input.selected);
 
-		const currentInput = $InputStore.reduce((prev, curr) => (prev += curr.value), '');
+			if (
+				$InputStore[liveIdx] &&
+				$InputStore[liveIdx].value.length &&
+				!$InputStore[liveIdx].disabled
+			) {
+				InputStore.update((currentInputs) => {
+					const copiedInputs = [...currentInputs];
+					const correct = $InputStore[liveIdx].value === $PromptCodeStore[liveIdx];
+					copiedInputs[liveIdx].disabled = !correct;
+					copiedInputs[liveIdx].correct = correct;
+					copiedInputs[liveIdx].wrong = !correct;
 
-		if (currentInput.length === $PromptCodeStore.length) {
-			if (currentInput === $PromptCodeStore) {
-				console.log('you show tenacity yung 1');
-				handleLevelRefresh();
-				openWinnerModal();
-			} else {
-				console.log('you lost ha~ ha~');
-				handleLevelRefresh();
-				openLoserModal();
+					return copiedInputs;
+				});
+			}
+
+			const currentInput = $InputStore.reduce((prev, curr) => (prev += curr.value), '');
+
+			if (currentInput.length === $PromptCodeStore.length) {
+				if (currentInput === $PromptCodeStore) {
+					console.log('you show tenacity yung 1');
+					handleLevelRefresh();
+					openWinnerModal();
+				} else {
+					console.log('you lost ha~ ha~');
+					handleLevelRefresh();
+					openLoserModal();
+				}
 			}
 		}
 	};

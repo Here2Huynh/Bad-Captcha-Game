@@ -5,31 +5,72 @@
 	import BaseLevel from '../../shared/BaseLevelLayout.svelte';
 	import Modal from '../../shared/Modal.svelte';
 	import { getRandomInt } from '../../shared/helpers/helpers';
-	import Tooltip from '../../shared/Tooltip.svelte';
 
-	import Letters from '../../stores/lettersStore';
 	import CharactersStore from '../../stores/charactersStore';
 	import { CheatingModalStore } from '../../stores/cheatingStore';
 	import InputStore from '../../stores/inputStore';
+	import Numbers from '../../stores/numbersStore';
+	import PromptCodeStore from '../../stores/promptStore';
 
 	export let idx;
+	let inputCode;
 
 	// function binded from child
 	let checkWinCondition;
 
-	const handleLastRowStyling = (idx) => {
-		switch (idx) {
-			case $CharactersStore.length - 2:
-				return 'col-start-3';
-			case $CharactersStore.length - 1:
-				return 'col-start-4';
-		}
+	// const handleLastRowStyling = (idx) => {
+	// 	switch (idx) {
+	// 		case $CharactersStore.length - 2:
+	// 			return 'col-start-3';
+	// 		case $CharactersStore.length - 1:
+	// 			return 'col-start-4';
+	// 	}
+	// };
+
+	const handleClick = () => {
+		InputStore.update((currentInputs) => {
+			const copyInputs = [...currentInputs];
+			inputCode = generateInputCode();
+			console.log('inputCode', inputCode);
+			copyInputs.map((input, idx) => {
+				input.value = inputCode[idx];
+
+				return input;
+			});
+
+			return copyInputs;
+		});
+
+		checkWinCondition(true);
+
+		// InputStore.update((currentInputs) => {
+		// 	let copyInputs = [...currentInputs];
+		// 	copyInputs.map((input) => {
+		// 		input.disabled = false;
+		// 		input.correct = null;
+		// 		input.wrong = null;
+		// 	});
+
+		// 	return copyInputs;
+		// });
 	};
 
-	const handleClick = () => {};
+	const generateInputCode = () => {
+		let result = '';
+
+		for (var i = 0; i < 5; i++) {
+			result += $Numbers.charAt(Math.floor(Math.random() * $Numbers.length));
+		}
+
+		return result;
+	};
+
+	onMount(() => {
+		inputCode = generateInputCode();
+	});
 </script>
 
-{#if promptCode}
+{#if inputCode}
 	<div in:fade={{ delay: 500 }}>
 		<Modal show={$CheatingModalStore}>
 			<BaseLevel {idx} bind:checkWinCondition promptMode="numbers">

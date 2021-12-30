@@ -84,7 +84,7 @@
 			return copyCharacters;
 		});
 
-		checkWinCondition();
+		checkWinCondition(false);
 	};
 </script>
 

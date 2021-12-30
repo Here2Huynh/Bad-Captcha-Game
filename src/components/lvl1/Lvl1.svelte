@@ -42,7 +42,7 @@
 			<BaseLevel {idx} bind:checkWinCondition>
 				<div class="grid grid-cols-6 grid-rows-5 gap-2 justify-items-center select-none m-4">
 					{#each $CharactersStore as character, idx (idx)}
-						<ProgressBar {idx} {character} on:input-entered={checkWinCondition} />
+						<ProgressBar {idx} {character} on:input-entered={checkWinCondition(false)} />
 					{/each}
 				</div>
 			</BaseLevel>
