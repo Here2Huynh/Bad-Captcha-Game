@@ -116,16 +116,22 @@
 		if (multi) {
 			InputStore.update((currentInputs) => {
 				const copiedInputs = [...currentInputs];
+
 				copiedInputs.map((input, idx) => {
-					//TODO: fix correct label bug
+					input.correct = null;
+					input.wrong = null;
+					input.disabled = false;
+
 					const correct = input.value === $PromptCodeStore[idx];
 					if (correct) {
 						input.correct = correct;
 						input.disabled = !correct;
 					} else {
-						input.wrong = correct;
+						input.wrong = !correct;
 						input.disabled = !correct;
 					}
+
+					return input;
 				});
 
 				return copiedInputs;

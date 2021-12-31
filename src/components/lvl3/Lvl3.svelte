@@ -31,7 +31,7 @@
 		InputStore.update((currentInputs) => {
 			const copyInputs = [...currentInputs];
 			inputCode = generateInputCode();
-			console.log('inputCode', inputCode);
+
 			copyInputs.map((input, idx) => {
 				input.value = inputCode[idx];
 
@@ -42,17 +42,6 @@
 		});
 
 		checkWinCondition(true);
-
-		// InputStore.update((currentInputs) => {
-		// 	let copyInputs = [...currentInputs];
-		// 	copyInputs.map((input) => {
-		// 		input.disabled = false;
-		// 		input.correct = null;
-		// 		input.wrong = null;
-		// 	});
-
-		// 	return copyInputs;
-		// });
 	};
 
 	const generateInputCode = () => {
