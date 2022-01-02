@@ -74,6 +74,7 @@
 							>
 								Generate Input Code
 							</span>
+							<!-- TODO: add animation to button on click -->
 						</button>
 					</div>
 				</div>

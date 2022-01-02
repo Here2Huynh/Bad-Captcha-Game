@@ -3,10 +3,6 @@
 </script>
 
 <div in:fade={{ delay: 500 }}>
-	<!-- <h1>Bad Captcha Game</h1> -->
-	<!-- TODO: set up a nicer in construction page -->
-
-	<!-- <div class="flex justify-center"> -->
 	<div
 		class="flex p-4 m-10 mt-32 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800"
 		role="alert"
@@ -24,8 +20,9 @@
 		>
 		<div>
 			<span class="font-medium">Hello!</span> This page is under construction 😬. Why don't you
-			check out the <a href={'/levels'} class="font-bold">levels</a>?
+			check out the levels?
+			<!-- TODO: figure out the routing and states -->
+			<!-- <a href={'/levels'} class="font-bold">levels</a> -->
 		</div>
 	</div>
-	<!-- </div> -->
 </div>
