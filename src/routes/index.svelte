@@ -1,5 +1,11 @@
 <script>
 	import { fade } from 'svelte/transition';
+
+	/**
+	 * TODO:
+	 * - create account form
+	 * - login form
+	 */
 </script>
 
 <div in:fade={{ delay: 500 }}>
@@ -20,9 +26,7 @@
 		>
 		<div>
 			<span class="font-medium">Hello!</span> This page is under construction 😬. Why don't you
-			check out the levels?
-			<!-- TODO: figure out the routing and states -->
-			<!-- <a href={'/levels'} class="font-bold">levels</a> -->
+			check out the <a href={'/levels'} class="font-bold">levels</a>?
 		</div>
 	</div>
 </div>

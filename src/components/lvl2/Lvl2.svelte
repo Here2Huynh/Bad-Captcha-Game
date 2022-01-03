@@ -107,7 +107,6 @@
 								pointer={character.side == 0 ? 'start' : 'end'}
 								position={character.side == 0 ? 'right' : 'left'}
 								text={character.letter}
-								w="48"
 								show={character.show}
 							/>
 						</div>
