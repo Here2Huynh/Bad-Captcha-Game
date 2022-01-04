@@ -12,6 +12,10 @@ export const Levels = writable([
 	{
 		idx: 3,
 		name: 'random chaos'
+	},
+	{
+		idx: 4,
+		name: 'add to list'
 	}
 	// {
 	// 	idx: 3,
@@ -19,10 +23,7 @@ export const Levels = writable([
 	// },
 	// {
 	// 	idx: 4,
-	// 	name: 'growing bars'
+	// 	name: 'dragging clock match'
 	// },
 	// {
-	// 	idx: 5,
-	// 	name: 'growing bars'
-	// }
 ]);
