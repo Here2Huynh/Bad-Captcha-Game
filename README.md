@@ -1,5 +1,12 @@
 # Overview
-Game of passing through levels by passing captchas with the most nuisanced UIs.
+Game of captchas with the most nuisanced UIs that bots and humans will have trouble passing.
+
+Frictionless ux? not interested.
+Delight the user? How about annoy them ever so slightly. 
+
+Philosophy:
+What's a good way to practice building UIs well? 
+Build intentiontly bad ones.
 
 
 # create-svelte
