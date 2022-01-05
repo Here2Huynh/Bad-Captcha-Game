@@ -1,4 +1,8 @@
 <script>
+	/**
+	 * NOTE: fancy tailwindcss borrowed from
+	 * https://devdojo.com/tailwindcss/buttons#_
+	 */
 	import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
@@ -63,16 +67,42 @@
 					<span class="relative">Add Option</span>
 				</a>
 
-				{#each options as option, idx (idx)}
-					<div
-						animate:flip
-						class="w-fit m-auto"
-						class:inline-block={horizontal}
-						class:ml-2={horizontal}
-					>
-						<button on:click={() => removeOption(option)}>{option}</button>
-					</div>
-				{/each}
+				<div
+					class="flex gap-0"
+					class:flex-row={horizontal}
+					class:flex-wrap={horizontal}
+					class:flex-col={!horizontal}
+				>
+					{#each options as option, idx (idx)}
+						<div animate:flip class="w-fit m-auto p-4">
+							<a
+								href="#_"
+								on:click={() => removeOption(option)}
+								class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group"
+							>
+								<span
+									class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-amber-300 group-hover:w-full ease"
+								/>
+								<span
+									class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-amber-300 group-hover:w-full ease"
+								/>
+								<span
+									class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-amber-300 group-hover:h-full ease"
+								/>
+								<span
+									class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-amber-300 group-hover:h-full ease"
+								/>
+								<span
+									class="absolute inset-0 w-full h-full duration-300 delay-300 bg-amber-500 opacity-0 group-hover:opacity-100"
+								/>
+								<span
+									class="relative transition-colors duration-300 delay-200 group-hover:text-white ease"
+									>{option}</span
+								>
+							</a>
+						</div>
+					{/each}
+				</div>
 			</div>
 		</BaseLevel>
 	</Modal>

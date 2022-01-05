@@ -1,4 +1,8 @@
 <script>
+	/**
+	 * NOTE: fancy tailwindcss borrowed from
+	 * https://devdojo.com/tailwindcss/buttons#_
+	 */
 	let tabs = ['/', '/levels'];
 
 	const assignNames = (tab) => {
