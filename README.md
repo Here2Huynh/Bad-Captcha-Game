@@ -3,9 +3,6 @@
 # Overview
 Game of captchas with the most nuisanced UIs that bots and humans will have trouble passing.
 
-Frictionless ux? not interested. <br>
-Delight the user? How about annoy them ever so slightly. 
-
 Philosophy:<br>
 What's a good way to practice building UIs well? <br>
 Build intentiontly bad ones.
