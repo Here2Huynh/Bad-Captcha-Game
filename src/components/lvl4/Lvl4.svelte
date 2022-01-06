@@ -12,6 +12,7 @@
 
 	import Letters from '../../stores/lettersStore';
 	import { CheatingModalStore } from '../../stores/cheatingStore.js';
+	import InputStore from '../../stores/inputStore';
 
 	export let idx;
 	let horizontal = false;
@@ -27,6 +28,18 @@
 	};
 
 	const removeOption = (option) => {
+		InputStore.update((currentInputs) => {
+			let copyInputs = [...currentInputs];
+			const selectedInput = copyInputs.find((i) => i.selected);
+			if (selectedInput && !selectedInput.disabled) {
+				selectedInput.value = option;
+			}
+
+			return copyInputs;
+		});
+
+		checkWinCondition(false);
+
 		options = options.filter((x) => x != option);
 	};
 </script>
@@ -72,6 +85,7 @@
 					class:flex-row={horizontal}
 					class:flex-wrap={horizontal}
 					class:flex-col={!horizontal}
+					class:flex-auto={horizontal}
 				>
 					{#each options as option, idx (idx)}
 						<div animate:flip class="w-fit m-auto p-4">
