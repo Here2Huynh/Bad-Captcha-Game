@@ -3,7 +3,7 @@
 	import { Levels } from '../stores/levelStores';
 </script>
 
-<div in:fade={{ delay: 500 }}>
+<div out:fade={{ delay: 100 }} in:fade={{ delay: 500 }}>
 	<h1 class="my-8 text-4xl text-center">Levels List</h1>
 	<div class="flex justify-center">
 		<div class="w-11/12 rounded-lg lg:w-1/3">

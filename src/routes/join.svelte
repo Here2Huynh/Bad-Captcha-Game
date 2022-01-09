@@ -1,4 +1,7 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { fade } from 'svelte/transition';
+
 	let username;
 	let password;
 	let repeatPassword;
@@ -6,10 +9,6 @@
 	let badUsername = false;
 	let badPassword = false;
 	let badRepeatPassword = false;
-
-	$: {
-		console.log(username, password, repeatPassword);
-	}
 
 	// TODO: add terms and condition on a modal
 
@@ -20,32 +19,41 @@
 		// TODO: add custom validation and messagings
 
 		if (username.length < 6) {
-			badUsername = !badUsername;
+			badUsername = true;
 		}
 		if (username.length >= 6 && badUsername) {
-			badUsername = !badUsername;
+			badUsername = false;
 		}
 
 		if (password.length < 8) {
-			badPassword = !badPassword;
+			badPassword = true;
+		}
+		if (password.length >= 8 && badPassword) {
+			badPassword = false;
 		}
 
 		if (password !== repeatPassword) {
-			badRepeatPassword = !badRepeatPassword;
+			badRepeatPassword = true;
+		}
+
+		if (username.length >= 6 && password.length >= 8 && password === repeatPassword) {
+			goto('/in-construction');
 		}
 	};
 </script>
 
-<div class="flex justify-center mt-32">
+<div out:fade={{ delay: 100 }} in:fade={{ delay: 500 }} class="flex justify-center mt-32">
 	<form on:submit|preventDefault={handleSubmit}>
 		<div class="mb-6">
 			<label
 				for="username"
-				class="block mb-2 text-sm font-medium text-zinc-900"
+				class="block mb-2 text-lg font-medium text-zinc-900"
 				class:text-red-600={badUsername}>Desired Username</label
 			>
 			{#if badUsername}
-				<p class="text-red-600 italic mb-2">are you evening trying?</p>
+				<p class="text-red-600 italic mb-2 text-sm">
+					Are you evening trying? <span class="not-italic">🙄</span>
+				</p>
 			{/if}
 			<input
 				type="username"
@@ -59,25 +67,34 @@
 		<div class="mb-6">
 			<label
 				for="password"
-				class="block mb-2 text-sm font-medium text-zinc-900"
+				class="block mb-2 text-lg font-medium text-zinc-900"
 				class:text-red-600={badPassword}>Desired password</label
 			>
 			{#if badPassword}
-				<p class="text-red-600 italic mb-2">are you evening trying?</p>
+				<p class="text-red-600 italic mb-2 text-sm">
+					Are you evening trying? <span class="not-italic">😒</span>
+				</p>
 			{/if}
 			<input
 				type="password"
 				id="password"
 				bind:value={password}
-				placeholder="very-secure"
+				placeholder="very-secure-password"
 				class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
 				required
 			/>
 		</div>
 		<div class="mb-6">
-			<label for="repeat-password" class="block mb-2 text-sm font-medium text-zinc-900"
-				>Repeat password</label
+			<label
+				for="repeat-password"
+				class="block mb-2 text-lg font-medium text-zinc-900"
+				class:text-red-600={badRepeatPassword}>Repeat desired password</label
 			>
+			{#if badRepeatPassword}
+				<p class="text-red-600 italic mb-2 text-sm">
+					They don't even match.. <span class="not-italic">😑</span>
+				</p>
+			{/if}
 			<input
 				type="password"
 				id="repeat-password"
@@ -107,8 +124,8 @@
 		</div>
 		<button
 			type="submit"
-			class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-			>Register new account</button
+			class="text-white bg-purple-400 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+			>Sign up to the chaos</button
 		>
 	</form>
 </div>
