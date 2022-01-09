@@ -11,11 +11,14 @@
 
 	export let idx;
 	let inputCode;
+	let clicked = false;
 
 	// function binded from child
 	let checkWinCondition;
 
 	const handleClick = () => {
+		clicked = true;
+
 		InputStore.update((currentInputs) => {
 			const copyInputs = [...currentInputs];
 			inputCode = generateInputCode();
@@ -30,6 +33,10 @@
 		});
 
 		checkWinCondition(true);
+
+		setTimeout(() => {
+			clicked = false;
+		}, 1000);
 	};
 
 	const generateInputCode = () => {
@@ -54,6 +61,7 @@
 				<div class="flex justify-center">
 					<button
 						on:click={handleClick}
+						class:animate-bounce={clicked}
 						class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white "
 					>
 						<span
@@ -61,8 +69,6 @@
 						>
 							Generate Input Code
 						</span>
-
-						<!-- TODO: add animation to button on click -->
 					</button>
 				</div>
 			</BaseLevel>

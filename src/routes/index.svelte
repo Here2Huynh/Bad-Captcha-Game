@@ -1,13 +1,5 @@
 <script>
 	import { fade } from 'svelte/transition';
-
-	/**
-	 * TODO:
-	 * - create account form
-	 * - login form
-	 */
-
-	// TODO: fix border highlight for the nav bar, middle button
 </script>
 
 <div out:fade={{ delay: 100 }} in:fade={{ delay: 500 }}>
