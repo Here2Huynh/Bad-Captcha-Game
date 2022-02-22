@@ -3,24 +3,24 @@ import { writable } from 'svelte/store';
 export const Levels = writable([
 	{
 		idx: 1,
-		name: 'growing bars'
+		name: 'growing-bars'
 	},
 	{
 		idx: 2,
-		name: 'annoying buttons'
+		name: 'annoying-buttons'
 	},
 	{
 		idx: 3,
-		name: 'random chaos'
+		name: 'random-chaos'
 	},
 	{
 		idx: 4,
-		name: 'add to list'
+		name: 'add-to-list'
+	},
+	{
+		idx: 5,
+		name: 'running-out-of-time'
 	}
-	// {
-	// 	idx: 3,
-	// 	name: 'dragging time match'
-	// },
 	// {
 	// 	idx: 4,
 	// 	name: 'dragging clock match'

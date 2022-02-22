@@ -1,5 +1,11 @@
 <script>
 	import { fade } from 'svelte/transition';
+
+	const options = [
+		{ name: 'Join', route: '/join' },
+		{ name: 'Login', route: '/login' },
+		{ name: 'idc', route: '/levels' }
+	];
 </script>
 
 <div out:fade={{ delay: 100 }} in:fade={{ delay: 500 }}>
