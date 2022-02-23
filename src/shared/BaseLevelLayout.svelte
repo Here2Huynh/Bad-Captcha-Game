@@ -193,5 +193,7 @@
 <InputUI />
 
 {#if $PromptCodeStore}
-	<div transition:fade><slot /></div>
+	<div transition:fade>
+		<slot />
+	</div>
 {/if}
